@@ -1,3 +1,6 @@
+### Кластерный анализ российских ВУЗов
+#Данные: https://1drv.ms/x/s!Ao4Ycx5Das5liXyMdyl3BSnrpaci?e=ImHyxd
+
 library(rio)
 library(tidyverse)
 library(corrplot)
@@ -12,14 +15,11 @@ library(factoextra) # визуализации
 library(pvclust) # тоже визуализация
 library(NbClust) # визуализации и неиерархический анализ
 library(dendextend) # будем раскрашивать дерево
-
-
-
 data <- import("/Users/Игорь/Desktop/ВШЭ/Курс 1/Модуль 2/АнДан_Капуза/Кластерный анализ/univer_2017.xlsx")
 
                                ### Кластеризация ###
-### 1. Доходы ВУЗа/общая численность НР
-#Выберем переменные, стандартизуем, оставим 3 сигма (чтобы выбросы не влияли)
+### 1. Кластеризуем ВУЗы по соотношению доход / общая численность научных работников (НР)
+# Выберем переменные, стандартизуем, оставим 3 сигма (чтобы выбросы не влияли)
 task1 <- select (data, TOTINC, SCIENTIST)
 task1$st_TOTINC <- scale(data$TOTINC)
 task1$st_SCIENTIST <- scale(data$SCIENTIST)
@@ -66,7 +66,7 @@ clusterplot <- par(mfrow = c(1, 2))
 plot(task1[c("st_TOTINC", "st_SCIENTIST")], col=cl$cluster, xlab="Доход", ylab = "Кол-во НР")
 points(cl$centers[,c("st_TOTINC", "st_SCIENTIST")], col=4:6, pch=20, cex=2)
 
-#Содержательное описание (для 3 кластеров):
+# Содержательное описание (для 3 кластеров):
 # "Богатые и крупные" N=44,   mean доход=1.86 mean НР=0.635
 # "Средний класс, средний размер" N=229,   mean доход=0.4 mean НР=0.03
 # "Основная масса - скромный доход, небольшие", N=1163, mean доход=-0.275 mean НР=-0.09
