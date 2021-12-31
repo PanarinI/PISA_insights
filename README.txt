@@ -1,1 +1,4 @@
-Here you can find my analytical projects related to Education
+Here you can find some analytical projects related to Education:
+Correlation
+Clustering
+Contrast of means
